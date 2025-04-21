@@ -56,7 +56,7 @@ async function parseJSONorThrow(res: Response) {
 }
 
 export async function fetchTasksByAssignee(assignee_phone?: string): Promise<TasksByAssigneeResponse> {
-  let url = 'http://127.0.0.1:8000/api/dashboard/tasks/by-assignee';
+  let url = 'https://faff-internship-assignment.onrender.com/api/dashboard/tasks/by-assignee';
   if (assignee_phone) {
     url += `?assignee_phone=${encodeURIComponent(assignee_phone)}`;
   }
@@ -66,13 +66,13 @@ export async function fetchTasksByAssignee(assignee_phone?: string): Promise<Tas
 }
 
 export async function fetchUserTasks(user_phone: string): Promise<UserTasksResponse> {
-  const res = await fetch(`http://127.0.0.1:8000/api/dashboard/tasks/user/${user_phone}`);
+  const res = await fetch(`https://faff-internship-assignment.onrender.com/api/dashboard/tasks/user/${user_phone}`);
   if (!res.ok) throw new Error('Failed to fetch user tasks');
   return parseJSONorThrow(res);
 }
 
 export async function markAssignmentComplete(assignment_id: number): Promise<MarkAsDoneSuccessResponse> {
-  const res = await fetch(`http://127.0.0.1:8000/api/dashboard/assignments/${assignment_id}/complete`, { method: 'POST' });
+  const res = await fetch(`https://faff-internship-assignment.onrender.com/api/dashboard/assignments/${assignment_id}/complete`, { method: 'POST' });
   if (!res.ok) throw new Error('Failed to mark assignment as complete');
   return parseJSONorThrow(res);
 }
