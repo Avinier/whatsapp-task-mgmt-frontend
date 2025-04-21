@@ -87,9 +87,8 @@ export async function getDashboardData(username: string): Promise<{ admin: Tasks
     const data = await fetchTasksByAssignee();
     return { admin: data };
   } else {
-    // Use the new assignee_phone query param
-    const data = await fetchTasksByAssignee(username);
-    return { user: data[username]?.tasks || [] };
+    // Fix the type mismatch issue by ensuring we return proper UserTaskDetail[] type
+    const data = await fetchUserTasks(username);
+    return { user: data };
   }
 }
-

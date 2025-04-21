@@ -1,12 +1,12 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import { LogOut, User, Users, CheckCircle, Circle, Calendar, StickyNote, ListChecks } from 'lucide-react';
 
 import { fetchTasksByAssignee, fetchUserTasks, markAssignmentComplete, TasksByAssigneeResponse, UserTasksResponse, TaskDetail, UserTaskDetail, getDashboardData } from './api';
 
-function formatDate(dateStr) {
+function formatDate(dateStr: string): string {
   if (!dateStr) return '';
   const d = new Date(dateStr);
   return d.toLocaleString();
@@ -26,7 +26,7 @@ function TaskTable({ tasks, onToggle, readonly }: { tasks: UserTaskDetail[], onT
         </tr>
       </thead>
       <tbody>
-        {tasks.map((task) => (
+        {tasks.map((task : any) => (
           <tr key={task.assignment_id} className={task.status === 'completed' ? 'completed-row' : ''}>
             <td>{task.description}</td>
             <td>{formatDate(task.deadline)}</td>
@@ -74,7 +74,7 @@ function AdminTaskTable({ assigneeName, tasks, onToggle }: { assigneeName: strin
             </tr>
           </thead>
           <tbody>
-            {tasks.map((task) => (
+            {tasks.map((task : any) => (
               <tr key={task.assignment_id} className={task.status === 'completed' ? 'completed-row' : ''}>
                 <td>{task.description}</td>
                 <td>{formatDate(task.deadline)}</td>
@@ -124,14 +124,14 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 function Dashboard() {
   const { username, logout } = useAuth();
   const [view, setView] = useState<'admin' | 'user'>(username === 'admin' ? 'admin' : 'user');
-  const [currentUser, setCurrentUser] = useState<string>(username !== 'admin' ? username : '');
+  const [currentUser, setCurrentUser] = useState<string>(username !== 'admin' && username !== null ? username : '');
 
   // Ensure currentUser is set to username after login if not admin
   useEffect(() => {
-    if (username !== 'admin' && currentUser !== username) {
+    if (username !== 'admin' && username !== null && currentUser !== username) {
       setCurrentUser(username);
     }
-  }, [username]);
+  }, [username, currentUser]);
   const [users, setUsers] = useState<{ phone: string; name: string }[]>([]);
   const [adminData, setAdminData] = useState<TasksByAssigneeResponse>({});
   const [userTasks, setUserTasks] = useState<UserTasksResponse>([]);
