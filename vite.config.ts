@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: '[https://faff-internship-assignment.onrender.com](https://faff-internship-assignment.onrender.com)',
+        target: 'https://faff-internship-assignment.onrender.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
