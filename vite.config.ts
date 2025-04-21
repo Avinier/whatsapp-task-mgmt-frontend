@@ -1,16 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
-// vite.config.js
-export default {
+// [https://vite.dev/config/](https://vite.dev/config/)
+export default defineConfig({
+  plugins: [react()],
   server: {
     proxy: {
       '/api': {
         target: '[https://faff-internship-assignment.onrender.com](https://faff-internship-assignment.onrender.com)',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, '/api'),
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
     },
   },
-}
+});
